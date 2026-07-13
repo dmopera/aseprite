@@ -144,3 +144,19 @@ jobs:
         export ASEPRITE=$PWD/build/bin/aseprite
         cd tests
         $XVFB bash run-tests.sh
+
+    # -----------------------------
+    # ZIP + Artefact (somente Windows)
+    # -----------------------------
+    - name: Create ZIP package
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        Compress-Archive -Path build/bin/* -DestinationPath aseprite-build.zip
+
+    - name: Upload artifact
+      if: runner.os == 'Windows'
+      uses: actions/upload-artifact@v4
+      with:
+        name: aseprite-windows-build
+        path: aseprite-build.zip
