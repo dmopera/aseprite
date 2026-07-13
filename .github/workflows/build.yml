@@ -11,9 +11,11 @@ jobs:
   manual:
     if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: windows-latest
+    outputs:
+      os: windows-latest
     steps:
-      - name: Trigger Windows-only build
-        uses: actions/github-script@v7
+      - name: Set OS output
+        uses: actions/github-script@v8
         with:
           script: |
             core.setOutput("os", "windows-latest")
